@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MBTI Personality Classifier</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .highest-score {
+            font-weight: bold;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <form method="post">
+        <textarea name="text"></textarea>
+        <input type="submit" value="Classify">
+    </form>
+    {% if result %}
+        <table>
+            <tr>
+                <th>Personality Type</th>
+                <th>Score</th>
+            </tr>
+            {% for item in result %}
+                <tr class="{% if loop.first %}highest-score{% endif %}">
+                    <td>{{ item.label }}</td>
+                    <td>{{ "%.2f" % (item.score * 100) }}%</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</body>
+</html>
