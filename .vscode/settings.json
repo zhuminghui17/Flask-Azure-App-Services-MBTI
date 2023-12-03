@@ -1,0 +1,5 @@
+{
+    "containerApps.deployWorkspaceProject.containerAppResourceGroupName": "mbti-classification",
+    "containerApps.deployWorkspaceProject.containerAppName": "flask-mbti",
+    "containerApps.deployWorkspaceProject.containerRegistryName": "mbtiflask9b2ec3"
+}
