@@ -1,18 +1,36 @@
-"""
-Main cli or app entry point
-"""
+from flask import Flask, request, render_template
+import requests
 
-from mylib.__init__ import add
-import click
+app = Flask(__name__)
+
+# Replace 'YOUR_HUGGINGFACE_API_TOKEN' with your actual Hugging Face API token
+API_URL = "https://api-inference.huggingface.co/models/JanSt/albert-base-v2_mbti-classification"
+API_TOKEN = "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"
 
 
-@click.command("add")
-@click.argument("a", type=int)
-@click.argument("b", type=int)
-def add_cli(a, b):
-    click.echo(add(a, b))
+def query_huggingface(payload):
+    headers = {"Authorization": f"Bearer {API_TOKEN}"}
+    response = requests.post(
+        API_URL, headers=headers, json=payload, timeout=10
+    )  # 10 seconds timeout
+    return response.json()
+
+
+@app.route("/", methods=["GET", "POST"])
+def index():
+    result = None
+    if request.method == "POST":
+        text = request.form["text"]
+        response = query_huggingface({"inputs": text})
+        # Assuming the response is a list of dictionaries as shown
+        if response:
+            # Sort the response based on scores
+            sorted_response = sorted(
+                response[0], key=lambda k: k["score"], reverse=True
+            )
+            result = sorted_response
+    return render_template("index.html", result=result)
 
 
 if __name__ == "__main__":
-    # pylint: disable=no-value-for-parameter
-    add_cli()
+    app.run(debug=True, host="0.0.0.0", port=5000)

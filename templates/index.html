@@ -3,6 +3,28 @@
 <head>
     <title>MBTI Personality Classifier</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .search-bar {
+            width: 50%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .results-container {
+            width: 80%; /* Adjust the width as needed */
+            margin: auto;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -22,23 +44,30 @@
     </style>
 </head>
 <body>
-    <form method="post">
-        <textarea name="text"></textarea>
-        <input type="submit" value="Classify">
-    </form>
+    <div class="header">
+        <h1>MBTI Personality Classifier</h1>
+    </div>
+    <div class="search-container">
+        <form method="post">
+            <textarea class="search-bar" name="text"></textarea>
+            <input type="submit" value="Classify">
+        </form>
+    </div>
     {% if result %}
-        <table>
-            <tr>
-                <th>Personality Type</th>
-                <th>Score</th>
-            </tr>
-            {% for item in result %}
-                <tr class="{% if loop.first %}highest-score{% endif %}">
-                    <td>{{ item.label }}</td>
-                    <td>{{ "%.2f" % (item.score * 100) }}%</td>
+        <div class="results-container">
+            <table>
+                <tr>
+                    <th>Personality Type</th>
+                    <th>Score</th>
                 </tr>
-            {% endfor %}
-        </table>
+                {% for item in result %}
+                    <tr class="{% if loop.first %}highest-score{% endif %}">
+                        <td>{{ item.label }}</td>
+                        <td>{{ "%.2f" % (item.score * 100) }}%</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
     {% endif %}
 </body>
 </html>
