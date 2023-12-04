@@ -6,6 +6,7 @@ https://mbti-flask-app.azurewebsites.net/
 
 ## Project Overview
 This Flask web application uses a machine learning model from Hugging Face to classify text into Myers-Briggs Type Indicator (MBTI) personality types. It provides a simple web interface where users can input text and receive a MBTI personality classification. It use Docker Containation.
+
 Video Demo: https://youtu.be/jMqgW9K02rE
 
 ## MBTI
